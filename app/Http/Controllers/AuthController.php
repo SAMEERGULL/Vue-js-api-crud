@@ -14,15 +14,17 @@ class AuthController extends Controller
             'email' => 'required|string|email|unique:users,email',
             'password' => 'required|string|confirmed'
         ]);
-
+    
         $registerData['password'] = Hash::make($request->password);
-
+    
         $user = User::create($registerData);
-
+    
         $accessToken = $user->createToken('auth_token')->accessToken;
-
-        return response(['user' => $user, 'access_token' => $accessToken]);
-
+    
+        return response()->json([
+            'user' => $user,
+            'access_token' => $accessToken
+        ]);
     }
 
     public function login(Request $request) {
