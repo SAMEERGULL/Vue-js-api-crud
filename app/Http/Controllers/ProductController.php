@@ -30,8 +30,8 @@ class ProductController extends Controller
         $request->image->move(public_path('images'), $imageName);
         $productData['image'] = $imageName;
 
-        // $user_id = Auth::user()->id;
-        $productData['user_id'] = 1;
+        $user_id = $request->user_id;
+        $productData['user_id'] = $user_id;
 
 
         $product = new Product();
@@ -59,7 +59,8 @@ class ProductController extends Controller
         $request->image->move(public_path('images'), $imageName);
         $productData['image'] = $imageName;
 
-        $productData['user_id'] = 1;
+        $user_id = $request->user_id;
+        $productData['user_id'] = $user_id;
 
         $product->update([
             'name' => $productData['name'],
