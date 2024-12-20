@@ -21,7 +21,6 @@ class AuthController extends Controller
         $user = User::create($registerData);
 
         $accessToken = $user->createToken('auth_atoken')->accessToken;
-
         return response()->json([
             'user' => $user,
             'access_token' => $accessToken
@@ -38,15 +37,15 @@ class AuthController extends Controller
         if (!auth()->attempt($loginData)) {
             return response()->json(['message' => 'Invalid credentials'], 401);
         }
+        $user = auth()->user();
 
-        $accessToken = auth()->user()->createToken('auth_token')->accessToken;
-
-        return response()->json(['user' => auth()->user(), 'access_token' => $accessToken], 200);
+        $accessToken = $user->createToken('auth_token')->accessToken;
+        $user->update(['token' => $accessToken]);
+        return response()->json(['user' => $user, 'access_token' => $accessToken], 200);
     }
 
     public function logout(Request $request)
     {
-        print($request);
         $request->user()->token()->revoke();
         return response()->json(['message' => 'Successfully logged out'], 200);
     }

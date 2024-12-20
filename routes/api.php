@@ -15,8 +15,8 @@ Route::post('login', [AuthController::class, 'login']);
 Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:api');
 
 //Product routes
-Route::get('products', [ProductController::class, 'index']);
-Route::get('products/{product}', [ProductController::class, 'show']);
-Route::post('products', [ProductController::class, 'store']);
-Route::put('products/{product}', [ProductController::class, 'update']);
-Route::delete('products/{product}', [ProductController::class, 'delete']);
+Route::get('products', [ProductController::class, 'index'])->middleware('auth:api');
+Route::get('products/{product}', [ProductController::class, 'show'])->middleware('auth:api');
+Route::post('products', [ProductController::class, 'store'])->middleware('auth:api');
+Route::put('products/{product}', [ProductController::class, 'update'])->middleware('auth:api');
+Route::delete('products/{product}', [ProductController::class, 'delete'])->middleware('auth:api');
