@@ -75,14 +75,10 @@ class ProductController extends Controller
             'sku' => 'string|unique:products,sku,' . $product->id,
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048' ,
         ]);
+        return $request;
         $imageName = time().'.'.$request->image->extension();
         $request->image->move(public_path('images'), $imageName);
         $productData['image'] = $imageName;
-        // if ($request->image->isEmpty()) {
-        //     $imageName = time().'.'.$request->image->extension();
-        //     $request->image->move(public_path('images'), $imageName);
-        //     $productData['image'] = $imageName;
-        // }
 
         $user_id = $request->user_id;
         $productData['user_id'] = $user_id;
